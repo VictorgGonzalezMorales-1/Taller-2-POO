@@ -1,1 +1,6 @@
-mihs;null
+mdsff;null
+Crobat; Vivo
+Kingler; Vivo
+Quagsire; Vivo
+Eevee; Vivo
+Poliwrath; Vivo

@@ -24,6 +24,8 @@ public class Main {
 	// Metodo generado para cargar los txt que se les entregue
 	private static void cargartxt(String string) {
 
+		int contador = 0;
+
 		try {
 
 			File file = new File(string);
@@ -36,6 +38,21 @@ public class Main {
 				if (string.equals("Pokedex.txt")) {
 
 					A.crearPokedex(linea);
+
+				}
+
+				if (string.equals("Registros.txt")) {
+
+					if (contador == 0) {
+
+						A.crearJugador(linea.split(";")[0]);
+						contador++;
+
+					} else {
+
+						A.rellenarPokemon(linea.split(";")[0]);
+
+					}
 
 				}
 
@@ -67,6 +84,7 @@ public class Main {
 
 			case "1":
 
+				cargartxt("Registros.txt");
 				respuesta = continuar(scanner);
 
 				break;
@@ -108,15 +126,18 @@ public class Main {
 
 			switch (respuesta) {
 
+			// terminado
 			case "1":
 				P(A.revisarEquipo());
 				break;
 
+			// terminado
 			case "2":
 				salirCapturar(scanner);
 				break;
 
 			case "3":
+				accesoPc(scanner);
 				break;
 
 			case "4":
@@ -128,7 +149,9 @@ public class Main {
 			case "6":
 				break;
 
+			// terminado
 			case "7":
+				A.guardar();
 				break;
 
 			case "8":
@@ -147,7 +170,46 @@ public class Main {
 
 	}
 
-	//Método generado para coordinar la tarea de capturar un pokemon decidiendo en que habitat se desea hacer esto
+	// método generado para gestionar las tareas de intercambio de pokemones
+	private static void accesoPc(Scanner scanner) {
+
+		P(A.equipo());
+		String opción = "";
+
+		P("1) Cambiar Pokémon\n" + "2) Salir\n");
+
+		while (!opción.equals("2")) {
+
+			opción = scanner.nextLine();
+
+			switch (opción) {
+
+			case "1":
+				P("Ingrese el numero de posición de los pokemon que quiera intercambiar (N°pokemon1, N°pokemon2)");
+				opción = scanner.nextLine();
+				boolean funciona = A.intercambio(opción);
+				if (funciona == false)
+					P("Ingrese numeros separados por comas !!!!");
+				else {
+					opción = "2";
+				}
+				break;
+
+			case "2":
+				break;
+
+			default:
+				P("Ingrese una opción valida");
+				break;
+
+			}
+
+		}
+
+	}
+
+	// Método generado para coordinar la tarea de capturar un pokemon decidiendo en
+	// que habitat se desea hacer esto
 	private static void salirCapturar(Scanner scanner) {
 
 		String opcion = "0";
@@ -200,7 +262,8 @@ public class Main {
 
 	}
 
-	// Método generado para generar el pokemon al azar mediante llamado al administrador y decidir su capturaro o no
+	// Método generado para generar el pokemon al azar mediante llamado al
+	// administrador y decidir su capturaro o no
 	public static void capturar(Scanner scanner, String opcion) {
 
 		pokemon pokemonGenerado = A.generarPokemonAzar(opcion);

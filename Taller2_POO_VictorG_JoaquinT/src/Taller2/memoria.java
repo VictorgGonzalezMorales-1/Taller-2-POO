@@ -27,10 +27,9 @@ public class memoria {
 	public void setP(ArrayList<pokedex> p) {
 		this.p = p;
 	}
-	
+
 	public void guardarPokedex(pokedex po) {
 		p.add(po);
 	}
-	
 
 }

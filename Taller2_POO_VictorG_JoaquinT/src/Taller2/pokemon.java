@@ -35,8 +35,8 @@ public class pokemon {
 
 		return "Vivo";
 	}
-	
-	//Nombre
+
+	// Nombre
 	public String getNombre() {
 		return nombre;
 	}
@@ -44,12 +44,12 @@ public class pokemon {
 	public String toString() {
 		return nombre + "; " + estado();
 	}
-	
-	//Método que sumará todas las estadisticas
+
+	// Método que sumará todas las estadisticas
 	public double sumaEstads() {
-		
+
 		return this.ataque + this.ataqueEspecial + this.defensa + this.defensaEspecial + this.velocidad + this.vida;
-		
+
 	}
 
 }

@@ -22,19 +22,18 @@ public class administrador {
 
 		jugador prota = new jugador(nombre);
 		M.guardarJugador(prota);
-		sobreescribirTexto("Registros.txt", M.getJugador().textoSobreescribir());
 
 	}
 
-	public void sobreescribirTexto(String archivo, ArrayList<String> nuevoTexto) {
+	public void guardar() {
 
 		BufferedWriter Escritor;
 
 		try {
 
-			Escritor = new BufferedWriter(new FileWriter(archivo, false));
+			Escritor = new BufferedWriter(new FileWriter("Registros.txt", false));
 
-			for (String s : nuevoTexto) {
+			for (String s : M.getJugador().textoSobreescribir()) {
 
 				Escritor.write(s);
 				Escritor.newLine();
@@ -45,6 +44,23 @@ public class administrador {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+
+	}
+
+	// Metodo para buscar pokemon en la pokedex y guardarlo en el equipo
+	public void rellenarPokemon(String texto) {
+
+		ArrayList<pokedex> datos = M.getP();
+
+		for (pokedex po : datos) {
+
+			if (po.getPokemon().getNombre().equals(texto)) {
+
+				almacenarPokemonCapturado(po.getPokemon());
+
+			}
+
 		}
 
 	}
@@ -120,6 +136,46 @@ public class administrador {
 	// Método generado para guardar los pokémons captirados por el jugador
 	public void almacenarPokemonCapturado(pokemon capturado) {
 		M.getJugador().getListaPokemon().add(capturado);
+	}
+
+	// método el cual entregará la lista de los pokemon del prota
+	public String equipo() {
+
+		ArrayList<pokemon> equipo = M.getJugador().getListaPokemon();
+		int contador = 1;
+		String texto = "";
+
+		for (pokemon p : equipo) {
+
+			texto += (contador++) + ") " + p.toString() + "\n";
+
+		}
+
+		return texto;
+	}
+
+	public boolean intercambio(String opción) {
+
+		boolean funciona = false;
+
+		try {
+
+			ArrayList<pokemon> equipo = M.getJugador().getListaPokemon();
+			String[] partes = opción.split(",");
+
+			pokemon primero = equipo.get(Integer.valueOf(partes[0]) - 1);
+			pokemon segundo = equipo.get(Integer.valueOf(partes[1]) - 1);
+			pokemon auxiliar = primero;
+
+			equipo.set(Integer.valueOf(partes[0]) - 1, segundo);
+			equipo.set(Integer.valueOf(partes[1]) - 1, auxiliar);
+
+			funciona = true;
+
+		} catch (Exception e) {
+		}
+
+		return funciona;
 	}
 
 }

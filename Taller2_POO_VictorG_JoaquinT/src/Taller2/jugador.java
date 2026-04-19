@@ -30,15 +30,20 @@ public class jugador {
 	public void setListaPokemon(ArrayList<pokemon> listaPokemon) {
 		this.ArrayPokemon = listaPokemon;
 	}
-	
-	//Método que entraga todos los pokemons del usuario en un texto
+
+	// Método que entraga todos los pokemons del usuario en un texto
 	public String revisarEquipo() {
+
+		if (ArrayPokemon.isEmpty()) {
+			return "No has capturado ningún pokemon";
+		}
+
 		String equipo = "";
-		
-		for(pokemon p: ArrayPokemon) {
+
+		for (pokemon p : ArrayPokemon) {
 			equipo += p.toString() + "\n";
 		}
-		
+
 		return equipo;
 	}
 
@@ -54,18 +59,20 @@ public class jugador {
 	public void setDerrotados(String derrotados) {
 		this.derrotados = derrotados;
 	}
-	
+
 	// Generar Texto para sobreescribirlo
 	public ArrayList<String> textoSobreescribir() {
-		
-		texto.add(this.jugador + ";" +this.getDerrotados());
-		
-		for(pokemon p : ArrayPokemon) {
+
+		texto.clear();
+
+		texto.add(this.jugador + ";" + this.getDerrotados());
+
+		for (pokemon p : ArrayPokemon) {
 			texto.add(p.toString());
 		}
-		
+
 		return texto;
-		
+
 	}
 
 }
