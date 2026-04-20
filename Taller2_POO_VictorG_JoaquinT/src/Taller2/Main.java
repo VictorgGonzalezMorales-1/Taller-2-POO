@@ -50,7 +50,7 @@ public class Main {
 
 					} else {
 
-						A.rellenarPokemon(linea.split(";")[0]);
+						A.rellenarPokemon(linea.split(";")[0], linea.split(";")[1]);
 
 					}
 
@@ -147,11 +147,12 @@ public class Main {
 				break;
 
 			case "6":
+				A.curarPokemon();
 				break;
 
 			// terminado
 			case "7":
-				A.guardar();
+				A.guardar("Registros.txt");
 				break;
 
 			case "8":
@@ -191,11 +192,13 @@ public class Main {
 				if (funciona == false)
 					P("Ingrese numeros separados por comas !!!!");
 				else {
-					opción = "2";
+					P(A.equipo());
+					P("1) Cambiar Pokémon\n" + "2) Salir\n");
 				}
 				break;
 
 			case "2":
+				P("Volviendo ......");
 				break;
 
 			default:
@@ -283,6 +286,7 @@ public class Main {
 		switch (opcion) {
 
 		case "1":
+
 			A.almacenarPokemonCapturado(pokemonGenerado);
 			break;
 

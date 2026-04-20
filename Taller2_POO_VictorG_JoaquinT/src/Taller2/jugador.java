@@ -40,8 +40,16 @@ public class jugador {
 
 		String equipo = "";
 
+		int contador = 1;
+
 		for (pokemon p : ArrayPokemon) {
-			equipo += p.toString() + "\n";
+
+			if (contador <= 6) {
+				equipo += contador + ") " + p.toString() + "\n";
+				contador++;
+			} else {
+				break;
+			}
 		}
 
 		return equipo;

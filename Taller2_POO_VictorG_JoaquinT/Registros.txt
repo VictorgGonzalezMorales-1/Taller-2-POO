@@ -1,6 +1,5 @@
-mdsff;null
-Crobat; Vivo
-Kingler; Vivo
-Quagsire; Vivo
-Eevee; Vivo
-Poliwrath; Vivo
+yoelchupa;null
+Seismitoad; Vivo
+Meganium; Vivo
+Aerodactyl; Vivo
+Mawile; Vivo

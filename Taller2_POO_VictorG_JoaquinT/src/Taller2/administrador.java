@@ -25,13 +25,13 @@ public class administrador {
 
 	}
 
-	public void guardar() {
+	public void guardar(String archivo) {
 
 		BufferedWriter Escritor;
 
 		try {
 
-			Escritor = new BufferedWriter(new FileWriter("Registros.txt", false));
+			Escritor = new BufferedWriter(new FileWriter(archivo, false));
 
 			for (String s : M.getJugador().textoSobreescribir()) {
 
@@ -49,7 +49,7 @@ public class administrador {
 	}
 
 	// Metodo para buscar pokemon en la pokedex y guardarlo en el equipo
-	public void rellenarPokemon(String texto) {
+	public void rellenarPokemon(String texto, String estado) {
 
 		ArrayList<pokedex> datos = M.getP();
 
@@ -57,7 +57,11 @@ public class administrador {
 
 			if (po.getPokemon().getNombre().equals(texto)) {
 
-				almacenarPokemonCapturado(po.getPokemon());
+				pokemon copia = new pokemon(po.getPokemon());
+				if (estado.equals("Debilitado")) {
+					copia.setVida(0);
+				}
+				almacenarPokemonCapturado(copia);
 
 			}
 
@@ -133,9 +137,11 @@ public class administrador {
 
 	}
 
-	// Método generado para guardar los pokémons captirados por el jugador
+	// Método generado para guardar los pokémons capturados por el jugador
 	public void almacenarPokemonCapturado(pokemon capturado) {
-		M.getJugador().getListaPokemon().add(capturado);
+
+		pokemon copia = new pokemon(capturado);
+		M.getJugador().getListaPokemon().add(copia);
 	}
 
 	// método el cual entregará la lista de los pokemon del prota
@@ -154,6 +160,7 @@ public class administrador {
 		return texto;
 	}
 
+	// Método para intercambiar la posición de los pokemon soleccionado en el equipo
 	public boolean intercambio(String opción) {
 
 		boolean funciona = false;
@@ -176,6 +183,25 @@ public class administrador {
 		}
 
 		return funciona;
+	}
+
+	// Método para curar todo el equipo del jugador
+	public void curarPokemon() {
+
+		ArrayList<pokemon> equipo = M.getJugador().getListaPokemon();
+
+		int contador = 1;
+
+		for (pokemon p : equipo) {
+
+			if (contador < 7) {
+				p.curar();
+				contador++;
+			} else {
+				break;
+			}
+
+		}
 	}
 
 }
