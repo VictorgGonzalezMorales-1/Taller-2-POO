@@ -3,6 +3,7 @@ package Taller2;
 //Importar librerias necesarias para el funcionamiento del Main
 import java.util.Scanner;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -85,7 +86,7 @@ public class Main {
 			case "1":
 
 				cargartxt("Registros.txt");
-				respuesta = continuar(scanner);
+				respuesta = Opciones(scanner);
 
 				break;
 
@@ -94,7 +95,7 @@ public class Main {
 				P("Ingrese su apodo de jugador:");
 				respuesta = scanner.nextLine();
 				A.crearJugador(respuesta);
-				respuesta = continuar(scanner);
+				respuesta = Opciones(scanner);
 
 				break;
 
@@ -112,7 +113,7 @@ public class Main {
 	 * Método generado para mostrar las opciones de juego disponibles para le
 	 * jugador y comunicarse con administrador para completarlas
 	 */
-	private static String continuar(Scanner scanner) {
+	private static String Opciones(Scanner scanner) {
 
 		String respuesta = "";
 
@@ -126,9 +127,9 @@ public class Main {
 
 			switch (respuesta) {
 
-			// terminado
+			// Completado al 100%
 			case "1":
-				P(A.revisarEquipo());
+				P("\n" + RevisarEquipo());
 				break;
 
 			// terminado
@@ -170,6 +171,25 @@ public class Main {
 		return "3";
 
 	}
+
+	// -----------------------------------------------------------------------------//
+
+	// Método generado para completar la opción 1
+	private static String RevisarEquipo() {
+
+		ArrayList<pokemon> equipo = A.SolicitarEquipo();
+		int contador = 1;
+		String texto = "Equipo Actual:\n";
+
+		for (pokemon p : equipo) {
+			texto += contador + ") " + p.getNombre() + "|" + p.getTipo() + "|Stats totales: " + p.StatsTotales() + "\n";
+			contador++;
+		}
+
+		return texto;
+	}
+
+	// -----------------------------------------------------------------------------//
 
 	// método generado para gestionar las tareas de intercambio de pokemones
 	private static void accesoPc(Scanner scanner) {

@@ -20,44 +20,19 @@ public class jugador {
 	}
 
 	// Generar getters y Setters necesarios
+	
+	//Entregar ArrayList del equipo
+	public ArrayList<pokemon> getListaPokemon() {
+		return ArrayPokemon;
+	}
 
 	// Nombre jugador
 	public String getJugador() {
 		return jugador;
 	}
 
-	// Lista de Pokémons
-	public void setListaPokemon(ArrayList<pokemon> listaPokemon) {
-		this.ArrayPokemon = listaPokemon;
-	}
-
-	// Método que entraga todos los pokemons del usuario en un texto
-	public String revisarEquipo() {
-
-		if (ArrayPokemon.isEmpty()) {
-			return "No has capturado ningún pokemon";
-		}
-
-		String equipo = "";
-
-		int contador = 1;
-
-		for (pokemon p : ArrayPokemon) {
-
-			if (contador <= 6) {
-				equipo += contador + ") " + p.toString() + "\n";
-				contador++;
-			} else {
-				break;
-			}
-		}
-
-		return equipo;
-	}
-
-	public ArrayList<pokemon> getListaPokemon() {
-		return ArrayPokemon;
-	}
+	
+	
 
 	// Derrotados
 	public String getDerrotados() {

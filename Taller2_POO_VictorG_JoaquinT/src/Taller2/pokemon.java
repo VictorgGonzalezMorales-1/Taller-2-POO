@@ -48,6 +48,21 @@ public class pokemon {
 
 	}
 
+	// Nombre
+	public String getNombre() {
+		return nombre;
+	}
+
+	// Entregar el tipo del pokemon
+	public String getTipo() {
+		return tipo;
+	}
+
+	// Método que sumará todas las estadisticas
+	public double StatsTotales() {
+		return this.ataque + this.ataqueEspecial + this.defensa + this.defensaEspecial + this.velocidad + this.vida;
+	}
+
 	// Método para verificar el estado del pokémon
 	public String estado() {
 
@@ -58,22 +73,6 @@ public class pokemon {
 		return "Vivo";
 	}
 
-	// Nombre
-	public String getNombre() {
-		return nombre;
-	}
-
-	public String toString() {
-		return nombre + "; " + estado();
-	}
-
-	// Método que sumará todas las estadisticas
-	public double sumaEstads() {
-
-		return this.ataque + this.ataqueEspecial + this.defensa + this.defensaEspecial + this.velocidad + this.vida;
-
-	}
-
 	// Curar pokemon
 	public void curar() {
 
@@ -81,9 +80,13 @@ public class pokemon {
 
 	}
 
-	//Setter para modificar la vida
+	// Setter para modificar la vida
 	public void setVida(double vida) {
 		this.vida = vida;
 	}
 
+	// Entregar el nombre del pokemon
+	public String toString() {
+		return nombre + "; " + estado();
+	}
 }

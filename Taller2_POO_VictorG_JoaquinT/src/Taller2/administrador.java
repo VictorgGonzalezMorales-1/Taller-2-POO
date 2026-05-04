@@ -84,8 +84,8 @@ public class administrador {
 	}
 
 	// Método que entrega la información de los pokemones del jugador
-	public String revisarEquipo() {
-		return M.getJugador().revisarEquipo();
+	public ArrayList<pokemon> SolicitarEquipo() {
+		return M.getJugador().getListaPokemon();
 
 	}
 
