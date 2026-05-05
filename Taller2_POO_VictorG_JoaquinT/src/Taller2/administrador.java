@@ -159,4 +159,43 @@ public class administrador {
 		return funciona;
 	}
 
+	// ---------------------------------------------------------------------------------
+
+	//Método empleado para crear y guardar un Gymnasio al leer su línea correspondiente
+	public void CrearGimnasio(String linea) {
+
+		String[] partes = linea.split(";");
+
+		gimnacios nuevoGimnasio = new gimnacios(partes[0], partes[1], partes[2]);
+
+		for (int a = 0; a < Integer.valueOf(partes[3]); a++) {
+
+			nuevoGimnasio.GuardarPokemon(BuscarPokemon(partes[4 + a]));
+
+		}
+
+		M.GuardarGimnasio(nuevoGimnasio);
+
+	}
+
+	// Método para buscar el pokemon que se pide y devolver una copia
+	public pokemon BuscarPokemon(String nombrePokemon) {
+
+		for (pokedex p : M.getP()) {
+
+			if (p.getPokemon().getNombre().equals(nombrePokemon)) {
+				return new pokemon(p.getPokemon());
+			}
+
+		}
+
+		return null;
+
+	}
+	
+	// Método generado para solcitar la lista completa de los gimnasios
+	public ArrayList<gimnacios> SolicitarGimnasios(){
+		return M.EntregarGimnasios();
+	}
+
 }

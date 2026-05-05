@@ -8,6 +8,7 @@ public class memoria {
 	private jugador prota;
 	private ArrayList<pokedex> p = new ArrayList<pokedex>();
 	private ArrayList<Habitat> h = new ArrayList<Habitat>();
+	private ArrayList<gimnacios> g = new ArrayList<gimnacios>();
 
 	// Getters y Setters
 
@@ -40,6 +41,15 @@ public class memoria {
 
 	public ArrayList<Habitat> EntregarHabitats() {
 		return h;
+	}
+	
+	//Gimnasios
+	public ArrayList<gimnacios> EntregarGimnasios(){
+		return g;
+	}
+	
+	public void GuardarGimnasio(gimnacios gimnasios) {
+		g.add(gimnasios);
 	}
 
 }

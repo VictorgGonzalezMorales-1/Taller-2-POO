@@ -16,7 +16,8 @@ public class Main {
 
 		CargarTxt("Pokedex.txt");
 		CargarTxt("Habitats.txt");
-
+		CargarTxt("Gimnasios.txt");
+		
 		menu(scanner);
 
 		scanner.close();
@@ -62,6 +63,10 @@ public class Main {
 
 					A.CrearHabitat(linea);
 
+				}
+				
+				if(string.equals("Gimnasios.txt")) {
+					A.CrearGimnasio(linea);
 				}
 
 			}
@@ -149,11 +154,13 @@ public class Main {
 				SalirACapturar(scanner);
 				break;
 
+			// Completado al 90% (falta prueba de errores)
 			case "3":
 				AccesoPc(scanner);
 				break;
 
 			case "4":
+				RetarGimnasio(scanner);
 				break;
 
 			case "5":
@@ -319,6 +326,27 @@ public class Main {
 	// -----------------------------------------------------------------------------//
 
 	// Método generado para completar la opción 4
+	private static void RetarGimnasio(Scanner scanner) {
+		
+		P(EntregarGimnasios());
+		
+	}
+	
+	public static String EntregarGimnasios() {
+		
+		ArrayList<gimnacios> oponentes= A.SolicitarGimnasios();
+		
+		String texto = "A cual Lider deseas retar??\n\n";
+		
+		for(gimnacios g: oponentes) {
+			
+			texto+= g + "\n";
+		}
+		
+		texto += String.valueOf(oponentes.size() + 1) + ") Volver al menu.\n";
+		
+		return texto;
+	}
 
 	// -----------------------------------------------------------------------------//
 
