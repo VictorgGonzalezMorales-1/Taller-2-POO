@@ -150,7 +150,7 @@ public class Main {
 				break;
 
 			case "3":
-				accesoPc(scanner);
+				AccesoPc(scanner);
 				break;
 
 			case "4":
@@ -159,11 +159,12 @@ public class Main {
 			case "5":
 				break;
 
+			// Completado al 90% (falta prueba de errores)
 			case "6":
-				A.curarPokemon();
+				CurarPokemon();
 				break;
 
-			// terminado
+			// Método temporal
 			case "7":
 				A.guardar("Registros.txt");
 				break;
@@ -194,58 +195,11 @@ public class Main {
 		String texto = "Equipo Actual:\n";
 
 		for (pokemon p : equipo) {
-			texto += contador + ") " + p.getNombre() + "|" + p.getTipo() + "|Stats totales: " + p.StatsTotales() + "\n";
+			texto += contador + ") " + p + "\n";
 			contador++;
 		}
 
 		return texto;
-	}
-
-	// -----------------------------------------------------------------------------//
-
-	// método generado para gestionar las tareas de intercambio de pokemones
-	private static void accesoPc(Scanner scanner) {
-
-		P(A.equipo());
-		String opción = "";
-
-		P("1) Cambiar Pokémon\n" + "2) Salir\n");
-
-		while (!opción.equals("2")) {
-
-			opción = scanner.nextLine();
-
-			switch (opción) {
-
-			case "1":
-				P("Ingrese el numero de posición de los pokemon que quiera intercambiar (N°pokemon1, N°pokemon2)");
-				opción = scanner.nextLine();
-				boolean funciona = A.intercambio(opción);
-				if (funciona == false)
-					P("Ingrese numeros separados por comas !!!!");
-				else {
-					P(A.equipo());
-					P("1) Cambiar Pokémon\n" + "2) Salir\n");
-				}
-				break;
-
-			case "2":
-				P("Volviendo ......");
-				break;
-
-			default:
-				P("Ingrese una opción valida");
-				break;
-
-			}
-
-		}
-
-	}
-
-	// Método generado para imprimir más rápido
-	public static void P(String t) {
-		System.out.println(t);
 	}
 
 	// -----------------------------------------------------------------------------//
@@ -300,5 +254,109 @@ public class Main {
 	}
 
 	// -----------------------------------------------------------------------------//
+
+	// Método generado para completar la opción 3
+	private static void AccesoPc(Scanner scanner) {
+
+		P(EntregarEquipo());
+		String opción = "";
+
+		while (!opción.equals("2")) {
+
+			P("1) Cambiar Pokémon\n" + "2) Salir\n");
+
+			opción = scanner.nextLine();
+
+			switch (opción) {
+
+			case "1":
+				P("Ingrese el numero de posición de los pokemon que quiera intercambiar (N°pokemon1, N°pokemon2)");
+				opción = scanner.nextLine();
+				boolean funciona = A.intercambio(opción);
+				if (funciona == false)
+					P("Ingrese numeros separados por comas !!!!\n");
+				else {
+					P(EntregarEquipo());
+				}
+				break;
+
+			case "2":
+				P("Volviendo ......\n");
+				break;
+
+			default:
+				P("Ingrese una opción valida\n");
+				break;
+
+			}
+
+		}
+
+	}
+
+	public static String EntregarEquipo() {
+
+		ArrayList<pokemon> equipo = A.SolicitarEquipo();
+
+		String texto = "";
+
+		int largo = 0;
+
+		if (equipo.size() >= 6) {
+			largo = 6;
+		} else {
+			largo = equipo.size();
+		}
+
+		for (int a = 0; a < largo; a++) {
+			texto += (a + 1) + ") " + equipo.get(a) + "\n";
+		}
+
+		return texto;
+
+	}
+
+	// -----------------------------------------------------------------------------//
+
+	// Método generado para completar la opción 4
+
+	// -----------------------------------------------------------------------------//
+
+	// Método generado para completar la opción 5
+
+	// -----------------------------------------------------------------------------//
+
+	// Método generado para completar la opción 6
+	private static void CurarPokemon() {
+
+		ArrayList<pokemon> equipo = A.SolicitarEquipo();
+
+		int contador = 1;
+
+		for (pokemon p : equipo) {
+
+			if (contador < 7 && p.estado().equals("Debilitado")) {
+				p.curar();
+				contador++;
+			} else {
+				break;
+			}
+
+		}
+
+		P("\nTu equipo se ha recuperado!\n");
+
+	}
+
+	// -----------------------------------------------------------------------------//
+
+	// Método generado para completar la opción 7
+
+	// -----------------------------------------------------------------------------//
+
+	// Método generado para imprimir más rápido
+	public static void P(String t) {
+		System.out.println(t);
+	}
 
 }

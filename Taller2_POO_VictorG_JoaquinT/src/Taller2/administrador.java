@@ -83,72 +83,6 @@ public class administrador {
 		}
 	}
 
-	// Método que entrega la información de los pokemones del jugador
-	public ArrayList<pokemon> SolicitarEquipo() {
-		return M.getJugador().getListaPokemon();
-
-	}
-
-	// método el cual entregará la lista de los pokemon del prota
-	public String equipo() {
-
-		ArrayList<pokemon> equipo = M.getJugador().getListaPokemon();
-		int contador = 1;
-		String texto = "";
-
-		for (pokemon p : equipo) {
-
-			texto += (contador++) + ") " + p.toString() + "\n";
-
-		}
-
-		return texto;
-	}
-
-	// Método para intercambiar la posición de los pokemon soleccionado en el equipo
-	public boolean intercambio(String opción) {
-
-		boolean funciona = false;
-
-		try {
-
-			ArrayList<pokemon> equipo = M.getJugador().getListaPokemon();
-			String[] partes = opción.split(",");
-
-			pokemon primero = equipo.get(Integer.valueOf(partes[0]) - 1);
-			pokemon segundo = equipo.get(Integer.valueOf(partes[1]) - 1);
-			pokemon auxiliar = primero;
-
-			equipo.set(Integer.valueOf(partes[0]) - 1, segundo);
-			equipo.set(Integer.valueOf(partes[1]) - 1, auxiliar);
-
-			funciona = true;
-
-		} catch (Exception e) {
-		}
-
-		return funciona;
-	}
-
-	// Método para curar todo el equipo del jugador
-	public void curarPokemon() {
-
-		ArrayList<pokemon> equipo = M.getJugador().getListaPokemon();
-
-		int contador = 1;
-
-		for (pokemon p : equipo) {
-
-			if (contador < 7) {
-				p.curar();
-				contador++;
-			} else {
-				break;
-			}
-
-		}
-	}
-
 	// ----------------------------------------------------------
 
 	// Método encargado de Crear habitats y almacenarlos
@@ -187,12 +121,42 @@ public class administrador {
 		int posicion = random.nextInt(100);
 		return h.ConseguirArregloPokemon()[posicion];
 	}
-	
-	// Método generado para guardar los pokémons capturados por el jugador
-		public void AlmacenarPokemonCapturado(pokemon capturado) {
 
-			pokemon copia = new pokemon(capturado);
-			M.getJugador().getListaPokemon().add(copia);
+	// Método generado para guardar los pokémons capturados por el jugador
+	public void AlmacenarPokemonCapturado(pokemon capturado) {
+		pokemon copia = new pokemon(capturado);
+		M.getJugador().getListaPokemon().add(copia);
+	}
+
+	// Método que entrega la información de los pokemones del jugador
+	public ArrayList<pokemon> SolicitarEquipo() {
+		return M.getJugador().getListaPokemon();
+
+	}
+
+	// Método para intercambiar la posición de los pokemon soleccionado en el equipo
+	public boolean intercambio(String opción) {
+
+		boolean funciona = false;
+
+		try {
+
+			ArrayList<pokemon> equipo = M.getJugador().getListaPokemon();
+			String[] partes = opción.split(",");
+
+			pokemon primero = equipo.get(Integer.valueOf(partes[0]) - 1);
+			pokemon segundo = equipo.get(Integer.valueOf(partes[1]) - 1);
+			pokemon auxiliar = primero;
+
+			equipo.set(Integer.valueOf(partes[0]) - 1, segundo);
+			equipo.set(Integer.valueOf(partes[1]) - 1, auxiliar);
+
+			funciona = true;
+
+		} catch (Exception e) {
 		}
+
+		return funciona;
+	}
 
 }

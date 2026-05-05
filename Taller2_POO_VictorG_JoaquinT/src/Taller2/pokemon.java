@@ -87,6 +87,6 @@ public class pokemon {
 
 	// Entregar el nombre del pokemon
 	public String toString() {
-		return nombre + "; " + estado();
+		return getNombre() + "|" + getTipo() + "|Stats totales: " + StatsTotales();
 	}
 }
