@@ -42,12 +42,12 @@ public class memoria {
 	public ArrayList<Habitat> EntregarHabitats() {
 		return h;
 	}
-	
-	//Gimnasios
-	public ArrayList<gimnacios> EntregarGimnasios(){
+
+	// Gimnasios
+	public ArrayList<gimnacios> EntregarGimnasios() {
 		return g;
 	}
-	
+
 	public void GuardarGimnasio(gimnacios gimnasios) {
 		g.add(gimnasios);
 	}

@@ -161,7 +161,8 @@ public class administrador {
 
 	// ---------------------------------------------------------------------------------
 
-	//Método empleado para crear y guardar un Gymnasio al leer su línea correspondiente
+	// Método empleado para crear y guardar un Gymnasio al leer su línea
+	// correspondiente
 	public void CrearGimnasio(String linea) {
 
 		String[] partes = linea.split(";");
@@ -192,9 +193,9 @@ public class administrador {
 		return null;
 
 	}
-	
+
 	// Método generado para solcitar la lista completa de los gimnasios
-	public ArrayList<gimnacios> SolicitarGimnasios(){
+	public ArrayList<gimnacios> SolicitarGimnasios() {
 		return M.EntregarGimnasios();
 	}
 

@@ -17,7 +17,7 @@ public class Main {
 		CargarTxt("Pokedex.txt");
 		CargarTxt("Habitats.txt");
 		CargarTxt("Gimnasios.txt");
-		
+
 		menu(scanner);
 
 		scanner.close();
@@ -64,8 +64,8 @@ public class Main {
 					A.CrearHabitat(linea);
 
 				}
-				
-				if(string.equals("Gimnasios.txt")) {
+
+				if (string.equals("Gimnasios.txt")) {
 					A.CrearGimnasio(linea);
 				}
 
@@ -327,25 +327,59 @@ public class Main {
 
 	// Método generado para completar la opción 4
 	private static void RetarGimnasio(Scanner scanner) {
-		
+
+		ArrayList<gimnacios> oponentes = A.SolicitarGimnasios();
+
 		P(EntregarGimnasios());
-		
-	}
-	
-	public static String EntregarGimnasios() {
-		
-		ArrayList<gimnacios> oponentes= A.SolicitarGimnasios();
-		
-		String texto = "A cual Lider deseas retar??\n\n";
-		
-		for(gimnacios g: oponentes) {
-			
-			texto+= g + "\n";
+
+		String respuesta = scanner.nextLine();
+
+		if (RevisarPermisoBatalla(respuesta) == true) {
+
+			gimnacios oponente = oponentes.get(Integer.valueOf(respuesta) - 1);
+
+			P("Desafiando a " + oponente.EntregarLiderGimnasio() + "!!\n");
+
+			// Aquí irá el método que controlará la batalla!!!!!
+
 		}
-		
+
+	}
+
+	public static String EntregarGimnasios() {
+
+		ArrayList<gimnacios> oponentes = A.SolicitarGimnasios();
+
+		String texto = "A cual Lider deseas retar??\n\n";
+
+		for (gimnacios g : oponentes) {
+
+			texto += g + "\n";
+		}
+
 		texto += String.valueOf(oponentes.size() + 1) + ") Volver al menu.\n";
-		
+
 		return texto;
+	}
+
+	public static boolean RevisarPermisoBatalla(String respuesta) {
+
+		ArrayList<gimnacios> oponentes = A.SolicitarGimnasios();
+
+		for (int a = 0; a < Integer.valueOf(respuesta) - 1; a++) {
+
+			if (oponentes.get(a).EntregarEstadoGimnasio().equals("Sin derrotar")) {
+				return false;
+			}
+
+		}
+
+		if (oponentes.get(Integer.valueOf(respuesta) - 1).EntregarEstadoGimnasio().equals("Sin derrotar")) {
+			return true;
+		}
+
+		return false;
+
 	}
 
 	// -----------------------------------------------------------------------------//
