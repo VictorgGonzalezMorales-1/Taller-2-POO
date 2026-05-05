@@ -14,7 +14,8 @@ public class Main {
 
 		Scanner scanner = new Scanner(System.in);
 
-		cargartxt("Pokedex.txt");
+		CargarTxt("Pokedex.txt");
+		CargarTxt("Habitats.txt");
 
 		menu(scanner);
 
@@ -23,7 +24,7 @@ public class Main {
 	}
 
 	// Metodo generado para cargar los txt que se les entregue
-	private static void cargartxt(String string) {
+	private static void CargarTxt(String string) {
 
 		int contador = 0;
 
@@ -57,6 +58,12 @@ public class Main {
 
 				}
 
+				if (string.equals("Habitats.txt")) {
+
+					A.CrearHabitat(linea);
+
+				}
+
 			}
 
 			lector.close();
@@ -85,7 +92,7 @@ public class Main {
 
 			case "1":
 
-				cargartxt("Registros.txt");
+				CargarTxt("Registros.txt");
 				respuesta = Opciones(scanner);
 
 				break;
@@ -115,6 +122,11 @@ public class Main {
 	 */
 	private static String Opciones(Scanner scanner) {
 
+		// Llamado al método para rellenar los habitats con sus pokemons
+		// correspondientes
+		// solo una vez en toda la partida
+		A.RellenarHabitat();
+
 		String respuesta = "";
 
 		while (!respuesta.equals("8")) {
@@ -127,14 +139,14 @@ public class Main {
 
 			switch (respuesta) {
 
-			// Completado al 100%
+			// Completado al 90% (falta prueba de errores)
 			case "1":
 				P("\n" + RevisarEquipo());
 				break;
 
-			// terminado
+			// Completado al 90% (falta prueba de errores)
 			case "2":
-				salirCapturar(scanner);
+				SalirACapturar(scanner);
 				break;
 
 			case "3":
@@ -231,52 +243,54 @@ public class Main {
 
 	}
 
-	// Método generado para coordinar la tarea de capturar un pokemon decidiendo en
-	// que habitat se desea hacer esto
-	private static void salirCapturar(Scanner scanner) {
+	// Método generado para imprimir más rápido
+	public static void P(String t) {
+		System.out.println(t);
+	}
 
-		String opcion = "0";
+	// -----------------------------------------------------------------------------//
 
-		while (!opcion.equals("7")) {
+	// Método generado para completar la opción 2
+	public static void SalirACapturar(Scanner scanner) {
 
-			P("Donde deseas ir a explorar?\r\n" + "\r\n" + "Zonas disponibles:\r\n" + "\r\n" + "1) Lago\r\n"
-					+ "2) Cueva\r\n" + "3) Montaña\r\n" + "4) Bosque\r\n" + "5) Prado\r\n" + "6) Mar\r\n"
-					+ "7) Volver al menu.");
+		ArrayList<Habitat> habitats = A.SolicitarHabitat();
 
-			opcion = scanner.nextLine();
+		String texto = "Donde deseas ir a explorar?\r\n" + "\r\n" + "Zonas disponibles: \n";
 
-			switch (opcion) {
+		for (int a = 0; a < habitats.size(); a++) {
+			texto += "\n" + (a + 1) + ") " + habitats.get(a).getNombreHabitat();
+		}
+		texto += "\n7) Volver al menu.";
+
+		P(texto);
+
+		int posicion = Integer.valueOf(scanner.nextLine());
+
+		if (posicion != 7) {
+
+			pokemon pokemonGenerado = A.EntregarPokemonRandom(habitats.get(posicion - 1));
+
+			P("Oh!! Ha aparecido un increible " + pokemonGenerado.getNombre() + "!!\r\n" + "\r\n"
+					+ "Que deseas hacer?\r\n" + "\r\n" + "1) Capturar\r\n" + "2) Huir");
+
+			String respuesta = scanner.nextLine();
+
+			while (!respuesta.equals("1") && !respuesta.equals("2")) {
+
+				P("Ingrese un valor valido ");
+				respuesta = scanner.nextLine();
+
+			}
+
+			switch (respuesta) {
 
 			case "1":
-				capturar(scanner, "Lago");
+
+				A.AlmacenarPokemonCapturado(pokemonGenerado);
 				break;
 
 			case "2":
-				capturar(scanner, "Cueva");
-				break;
-
-			case "3":
-				capturar(scanner, "Montaña");
-				break;
-
-			case "4":
-				capturar(scanner, "Bosque");
-				break;
-
-			case "5":
-				capturar(scanner, "Prado");
-				break;
-
-			case "6":
-				capturar(scanner, "Mar");
-				break;
-
-			case "7":
-				P("Volviendo al menú ....");
-				break;
-
-			default:
-				P("Ingrese un valor valido ");
+				P("Huyendo.....");
 				break;
 
 			}
@@ -285,42 +299,6 @@ public class Main {
 
 	}
 
-	// Método generado para generar el pokemon al azar mediante llamado al
-	// administrador y decidir su capturaro o no
-	public static void capturar(Scanner scanner, String opcion) {
-
-		pokemon pokemonGenerado = A.generarPokemonAzar(opcion);
-
-		P("Oh!! Ha aparecido un increible " + pokemonGenerado.getNombre() + "!!\r\n" + "\r\n" + "Que deseas hacer?\r\n"
-				+ "\r\n" + "1) Capturar\r\n" + "2) Huir");
-
-		opcion = scanner.nextLine();
-
-		while (!opcion.equals("1") && !opcion.equals("2")) {
-
-			P("Ingrese un valor valido ");
-			opcion = scanner.nextLine();
-
-		}
-
-		switch (opcion) {
-
-		case "1":
-
-			A.almacenarPokemonCapturado(pokemonGenerado);
-			break;
-
-		case "2":
-			P("Huyendo.....");
-			break;
-
-		}
-
-	}
-
-	// Método generado para imprimir más rápido
-	public static void P(String t) {
-		System.out.println(t);
-	}
+	// -----------------------------------------------------------------------------//
 
 }

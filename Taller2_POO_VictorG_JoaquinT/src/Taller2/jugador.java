@@ -1,6 +1,6 @@
 package Taller2;
 
-//Importar librerias necesarias para el funcionamiento del Main
+//Importar librerias necesarias para el funcionamiento
 import java.util.ArrayList;
 
 public class jugador {

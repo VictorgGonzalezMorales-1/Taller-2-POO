@@ -61,7 +61,7 @@ public class administrador {
 				if (estado.equals("Debilitado")) {
 					copia.setVida(0);
 				}
-				almacenarPokemonCapturado(copia);
+				AlmacenarPokemonCapturado(copia);
 
 			}
 
@@ -87,61 +87,6 @@ public class administrador {
 	public ArrayList<pokemon> SolicitarEquipo() {
 		return M.getJugador().getListaPokemon();
 
-	}
-
-	// Método generado para buscar los pokemones de una zona en específico
-	public ArrayList<pokedex> buscarPokemon(String habitat) {
-
-		ArrayList<pokedex> buscar = M.getP();
-		ArrayList<pokedex> buscados = new ArrayList<>();
-
-		for (pokedex p : buscar) {
-
-			if (p.getHabitat().equals(habitat)) {
-				buscados.add(p);
-
-			}
-
-		}
-
-		return buscados;
-
-	}
-
-	// Método generado para buscar un pokemon al azar
-	public pokemon generarPokemonAzar(String habitat) {
-
-		ArrayList<pokedex> pokemones = buscarPokemon(habitat);
-		pokemon[] buscar = new pokemon[100];
-
-		int cantidad = 0;
-
-		for (pokedex p : pokemones) {
-
-			int probabilidad = (int) (p.getProbAparicion() * 100);
-
-			for (int a = 0; a < probabilidad; a++) {
-
-				buscar[cantidad] = p.getPokemon();
-				cantidad++;
-
-			}
-
-		}
-
-		Random random = new Random();
-
-		int posición = random.nextInt(100);
-
-		return buscar[posición];
-
-	}
-
-	// Método generado para guardar los pokémons capturados por el jugador
-	public void almacenarPokemonCapturado(pokemon capturado) {
-
-		pokemon copia = new pokemon(capturado);
-		M.getJugador().getListaPokemon().add(copia);
 	}
 
 	// método el cual entregará la lista de los pokemon del prota
@@ -203,5 +148,51 @@ public class administrador {
 
 		}
 	}
+
+	// ----------------------------------------------------------
+
+	// Método encargado de Crear habitats y almacenarlos
+	public void CrearHabitat(String Habitat) {
+		Habitat habitatCreado = new Habitat(Habitat);
+		M.GuardarHabitat(habitatCreado);
+	}
+
+	// Rellenar habitats con sus pokemones tantas veces como la probabilidad lo diga
+	public void RellenarHabitat() {
+
+		for (Habitat h : M.EntregarHabitats()) {
+
+			for (pokedex p : M.getP()) {
+
+				if (h.getNombreHabitat().equals(p.getHabitat())) {
+
+					h.RellenarArregloConPokemonNveces(p.getPokemon(), (int) (p.getProbAparicion() * 100));
+
+				}
+
+			}
+
+		}
+
+	}
+
+	// Método para solicitar el ArrayList de habitats
+	public ArrayList<Habitat> SolicitarHabitat() {
+		return M.EntregarHabitats();
+	}
+
+	// Método para calcular el pokemon Random
+	public pokemon EntregarPokemonRandom(Habitat h) {
+		Random random = new Random();
+		int posicion = random.nextInt(100);
+		return h.ConseguirArregloPokemon()[posicion];
+	}
+	
+	// Método generado para guardar los pokémons capturados por el jugador
+		public void AlmacenarPokemonCapturado(pokemon capturado) {
+
+			pokemon copia = new pokemon(capturado);
+			M.getJugador().getListaPokemon().add(copia);
+		}
 
 }
