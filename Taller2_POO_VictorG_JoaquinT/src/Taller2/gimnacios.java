@@ -40,6 +40,15 @@ public class gimnacios {
 		return this.lider;
 	}
 
+	// Método para entregar el ArrayList de pokemon
+	public ArrayList<pokemon> entregarPokemon() {
+		return this.p;
+	}
+	
+	public void setEstado(String estado) {
+	    this.estado = estado;
+	}
+
 	@Override
 	public String toString() {
 		return this.numeroGimnasio + ") " + this.lider + " - Estado: " + this.estado;

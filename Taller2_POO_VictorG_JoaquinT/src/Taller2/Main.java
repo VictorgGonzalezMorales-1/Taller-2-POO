@@ -9,6 +9,8 @@ public class Main {
 
 	// Método generado para llamar a administrador y que el realice las tareas
 	public static administrador A = new administrador();
+	public static Batalla B = new Batalla();
+	public static tablaTipos t = new tablaTipos();
 
 	public static void main(String[] args) {
 
@@ -48,7 +50,13 @@ public class Main {
 
 					if (contador == 0) {
 
-						A.crearJugador(linea.split(";")[0]);
+						String[] partes = linea.split(";");
+						A.crearJugador(partes[0]);
+
+						if (partes.length > 1 && !partes[1].equals("none")) {
+							A.solicitarJugador().setDerrotados(partes[1]);
+						}
+
 						contador++;
 
 					} else {
@@ -201,8 +209,16 @@ public class Main {
 		int contador = 1;
 		String texto = "Equipo Actual:\n";
 
-		for (pokemon p : equipo) {
-			texto += contador + ") " + p + "\n";
+		int largo = 0;
+
+		if (equipo.size() >= 6) {
+			largo = 6;
+		} else {
+			largo = equipo.size();
+		}
+
+		for (int a = 0; a < largo; a++) {
+			texto += contador + ") " + equipo.get(a) + "\n";
 			contador++;
 		}
 
@@ -265,7 +281,7 @@ public class Main {
 	// Método generado para completar la opción 3
 	private static void AccesoPc(Scanner scanner) {
 
-		P(EntregarEquipo());
+		P(entregarPokemones());
 		String opción = "";
 
 		while (!opción.equals("2")) {
@@ -283,7 +299,7 @@ public class Main {
 				if (funciona == false)
 					P("Ingrese numeros separados por comas !!!!\n");
 				else {
-					P(EntregarEquipo());
+					P(entregarPokemones());
 				}
 				break;
 
@@ -301,21 +317,13 @@ public class Main {
 
 	}
 
-	public static String EntregarEquipo() {
+	public static String entregarPokemones() {
 
 		ArrayList<pokemon> equipo = A.SolicitarEquipo();
 
 		String texto = "";
 
-		int largo = 0;
-
-		if (equipo.size() >= 6) {
-			largo = 6;
-		} else {
-			largo = equipo.size();
-		}
-
-		for (int a = 0; a < largo; a++) {
+		for (int a = 0; a < equipo.size(); a++) {
 			texto += (a + 1) + ") " + equipo.get(a) + "\n";
 		}
 
@@ -326,24 +334,188 @@ public class Main {
 	// -----------------------------------------------------------------------------//
 
 	// Método generado para completar la opción 4
+
 	private static void RetarGimnasio(Scanner scanner) {
 
 		ArrayList<gimnacios> oponentes = A.SolicitarGimnasios();
-
 		P(EntregarGimnasios());
-
 		String respuesta = scanner.nextLine();
 
 		if (RevisarPermisoBatalla(respuesta) == true) {
 
 			gimnacios oponente = oponentes.get(Integer.valueOf(respuesta) - 1);
+			jugador j = A.solicitarJugador();
 
 			P("Desafiando a " + oponente.EntregarLiderGimnasio() + "!!\n");
 
-			// Aquí irá el método que controlará la batalla!!!!!
+			// Guardar los jugadores en batalla
+			B.otorgarJugador(j);
+			B.otorgarOponente(oponente);
+
+			// Otorgar distribución incicial de pokemon a los participantes de la batalla
+			B.distribucionInicial();
+
+			P(oponente.EntregarLiderGimnasio() + " saca a " + B.getPokemonOponente().getNombre());
+			P(j.getJugador() + " saca a " + B.getPokemonJugador().getNombre() + "!\n");
+
+			eleccionesDeBatalla(scanner, oponente, j);
 
 		}
 
+	}
+
+	private static void eleccionesDeBatalla(Scanner scanner, gimnacios oponente, jugador j) {
+
+		String respuesta = "";
+		
+		while(B.combateFinalizado == false && !respuesta.equals("3")) {
+			
+			P(oponente.EntregarLiderGimnasio() + " saca a " + B.getPokemonOponente().getNombre());
+			P(j.getJugador() + " saca a " + B.getPokemonJugador().getNombre() + "!\n");
+			
+			P("Que deseas hacer?\r\n" + "1) Atacar\r\n" + "2) Cambiar de pokemon\r\n" + "3) Rendirse\r\n"
+				+ "Ingrese Opcion:");
+			
+			respuesta = scanner.nextLine();
+			
+			switch(respuesta) {
+			
+			case"1":
+				
+				luchar();
+				
+				break;
+				
+			case"2":
+				
+				elegirPokemonParaPelear(scanner);
+				
+				break;
+				
+			case"3":
+				
+				P("Volviendo al menu...\n");
+				B.combateFinalizado = true;
+				
+				break;
+
+			default:
+				P("Ingrese un valor permitido ..\n");
+			
+			}
+			
+			B.revisarVivos();
+			
+		}
+		
+		if(B.jugadorVivo == false) {
+			P("Te has quedado sin pokemons en tu equipo!");
+			respuesta = "3";
+		}
+		
+		if(B.oponeteVivo == false) {
+			P("Felicidades " + B.getJugador().getJugador() + " venciste a " + B.getOponente().EntregarLiderGimnasio() + "\n");
+			B.getOponente().setEstado("Derrotado");
+			//Falta agregar la medalla
+		}
+		
+		//Lo de si gana al loco 
+
+	}
+
+	
+	private static void luchar() {
+		
+		P(B.getPokemonJugador().getNombre() + " -> " + B.getPokemonJugador().StatsTotales() + "puntos");
+		P(B.getPokemonOponente().getNombre() + " -> " + B.getPokemonOponente().StatsTotales() + "puntos\n");
+		
+		//Revisar Efectividad
+		
+		int efectividadJugador = t.encontrarIndice(B.getPokemonJugador().getTipo());
+		int efectividadOponente = t.encontrarIndice(B.getPokemonOponente().getTipo());
+		
+		double efectividad = t.entregarEfectividad(efectividadJugador, efectividadOponente);
+		
+		//Imprimir efectividad pokemon
+		
+		double multiplicadorJugador = 1.0;
+
+		if (efectividad == 0.0) {
+			P(B.getPokemonJugador().getNombre() + " no afecta a " + B.getPokemonOponente().getNombre() + "!");
+			multiplicadorJugador = 0.0;
+		}
+		
+		else if(efectividad == 0.5) {
+			P(B.getPokemonJugador().getNombre() + " es poco eficaz contra " + B.getPokemonOponente().getNombre() + "!");
+			multiplicadorJugador = 0.5;
+			
+		}
+		else if(efectividad == 1.0) {
+			P(B.getPokemonJugador().getNombre() + " es un ataque normal contra " + B.getPokemonOponente().getNombre() + "!");
+			multiplicadorJugador = 1.0;
+		}
+		
+		else {
+			
+			P(B.getPokemonJugador().getNombre() + " es súper eficaz contra " + B.getPokemonOponente().getNombre() + "!");
+			multiplicadorJugador = 2.0;
+		}
+		
+
+		P("Nuevo puntaje:");
+		P(B.getPokemonJugador().getNombre() + " -> " + B.getPokemonJugador().StatsTotales()*multiplicadorJugador + "puntos");
+		P(B.getPokemonOponente().getNombre() + " -> " + B.getPokemonOponente().StatsTotales() + "puntos\n");
+		
+		if(B.getPokemonJugador().StatsTotales()*multiplicadorJugador > B.getPokemonOponente().StatsTotales()) {
+			P("Ha ganado " + B.getPokemonJugador().getNombre() + "! "+ B.getPokemonOponente().getNombre() +" ha sido derrotado...\n");
+			B.getPokemonOponente().setVida(0);
+			B.actualizarPokemonOponente();
+		}
+		else {
+			P("Ha ganado " + B.getPokemonOponente().getNombre() + "! "+ B.getPokemonJugador().getNombre() +" ha sido derrotado...\n");
+			B.getPokemonJugador().setVida(0);
+			B.actualizarPokemonJugador();
+		}
+		
+	}
+
+	private static void elegirPokemonParaPelear(Scanner scanner) {
+		
+		ArrayList<pokemon> equipo = A.SolicitarEquipo();
+
+		//Imprimir los pokemon
+		
+		int largo = 0;
+		String texto = "Ingrese el numero del pokemon que quiera usar\n\n";
+
+		if (equipo.size() >= 6) {
+			largo = 6;
+		} else {
+			largo = equipo.size();
+		}
+
+		for (int a = 0; a < largo; a++) {
+
+			texto += (a+1) + ") " + equipo.get(a).getNombre() + " - Estado: " + equipo.get(a).estado() + "\n";
+
+		}
+		
+		P(texto);
+		
+		//Seleccionar el pokemon y cambiarlo
+		
+		pokemon p = equipo.get(Integer.valueOf(scanner.nextLine())-1);
+		
+		while(p.estado().equals("Debilitado")) {
+			
+			P("Solo puedes seleccionar pokemon no debilitados\n");
+			P("Ingrese el numero del pokemon que quiera usar\n");
+			p = equipo.get(Integer.valueOf(scanner.nextLine())-1);
+			
+		}
+		
+		B.cambiarPokemonJugador(p);
+		
 	}
 
 	public static String EntregarGimnasios() {
@@ -393,20 +565,21 @@ public class Main {
 
 		ArrayList<pokemon> equipo = A.SolicitarEquipo();
 
-		int contador = 1;
+		int largo = 0;
 
-		for (pokemon p : equipo) {
+		if (equipo.size() >= 6) {
+			largo = 6;
+		} else {
+			largo = equipo.size();
+		}
 
-			if (contador < 7 && p.estado().equals("Debilitado")) {
-				p.curar();
-				contador++;
-			} else {
-				break;
+		for (int a = 0; a < largo; a++) {
+
+			if (equipo.get(a).estado().equals("Debilitado")) {
+				equipo.get(a).curar();
 			}
 
 		}
-
-		P("\nTu equipo se ha recuperado!\n");
 
 	}
 

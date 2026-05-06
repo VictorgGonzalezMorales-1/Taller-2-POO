@@ -193,10 +193,16 @@ public class administrador {
 		return null;
 
 	}
-
+	
+	//Método para solicitar jugador
+	public jugador solicitarJugador() {
+		return M.getJugador();
+	}
+	
 	// Método generado para solcitar la lista completa de los gimnasios
 	public ArrayList<gimnacios> SolicitarGimnasios() {
 		return M.EntregarGimnasios();
 	}
+
 
 }
