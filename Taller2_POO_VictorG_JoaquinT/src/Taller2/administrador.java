@@ -32,9 +32,10 @@ public class administrador {
 		if (archivo.equals("Registros.txt")) {
 			M.entregarTxtJugador();
 			txt = M.getTxtJugador();
-		} if (archivo.equals("Gimnasios.txt")) {
-		    M.entregarTxtGimnasio();
-		    txt = M.getTxtGimnasio();
+		}
+		if (archivo.equals("Gimnasios.txt")) {
+			M.entregarTxtGimnasio();
+			txt = M.getTxtGimnasio();
 		}
 
 		BufferedWriter Escritor;
@@ -142,9 +143,23 @@ public class administrador {
 	}
 
 	// Método generado para guardar los pokémons capturados por el jugador
-	public void AlmacenarPokemonCapturado(pokemon capturado) {
+	public boolean AlmacenarPokemonCapturado(pokemon capturado) {
+		
+		ArrayList<pokemon> equipo = M.getJugador().getListaPokemon();
+
+		for (pokemon p : equipo) {
+			
+			if (p.getNombre().equals(capturado.getNombre())) {
+				return false;
+				
+			}
+		}
+
 		pokemon copia = new pokemon(capturado);
-		M.getJugador().getListaPokemon().add(copia);
+		equipo.add(copia);
+
+		return true;
+		
 	}
 
 	// Método que entrega la información de los pokemones del jugador

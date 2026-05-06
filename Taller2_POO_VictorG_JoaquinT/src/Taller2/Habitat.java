@@ -30,7 +30,7 @@ public class Habitat {
 
 			if (pokemones[a] == null && contador < veces) {
 
-				pokemones[a] = p;
+				pokemones[a] = new pokemon(p);
 				contador++;
 
 			}

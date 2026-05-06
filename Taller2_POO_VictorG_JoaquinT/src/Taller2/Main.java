@@ -273,7 +273,13 @@ public class Main {
 
 			case "1":
 
-				A.AlmacenarPokemonCapturado(pokemonGenerado);
+				if(A.AlmacenarPokemonCapturado(pokemonGenerado) == true) {
+					P("POkemon capturado con exito\n");
+				}
+				else {
+					P("Ya tines este pokemon, no puedes capturarlo nuevamente\n");
+				}
+				
 				break;
 
 			case "2":

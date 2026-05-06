@@ -3,4 +3,6 @@ Magikarp;Debilitado
 Seismitoad;Debilitado
 Slugma;Debilitado
 Heracross;Debilitado
-Seismitoad;Debilitado
+Azumarill;Vivo
+Whiscash;Vivo
+Golduck;Vivo
