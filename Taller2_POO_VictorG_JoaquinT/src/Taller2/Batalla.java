@@ -108,14 +108,14 @@ public class Batalla {
 	// Método para ver si el jugador o el oponente pierden
 	public void revisarVivos() {
 
-		boolean jugadorVivo = false;
-		boolean oponeteVivo = false;
+		this.jugadorVivo = false;
+		this.oponeteVivo = false;
 
 		// Jugador
 		for (pokemon p : jugador.getListaPokemon()) {
 
 			if (p.estado().equals("Vivo")) {
-				jugadorVivo = true;
+				this.jugadorVivo = true;
 				break;
 			}
 
@@ -125,18 +125,14 @@ public class Batalla {
 		for (pokemon p : oponente.entregarPokemon()) {
 
 			if (p.estado().equals("Vivo")) {
-				oponeteVivo = true;
+				this.oponeteVivo = true;
 				break;
 			}
 
 		}
 
-		if (jugadorVivo == false) {
+		if (this.jugadorVivo == false || this.oponeteVivo == false) {
 			combateFinalizado = true;
-			this.jugadorVivo = false;
-		} else if (oponeteVivo == false) {
-			combateFinalizado = true;
-			this.oponeteVivo = false;
 		}
 
 	}

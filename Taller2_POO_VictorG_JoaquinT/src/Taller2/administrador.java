@@ -27,13 +27,23 @@ public class administrador {
 
 	public void guardar(String archivo) {
 
+		ArrayList<String> txt = null;
+
+		if (archivo.equals("Registros.txt")) {
+			M.entregarTxtJugador();
+			txt = M.getTxtJugador();
+		} if (archivo.equals("Gimnasios.txt")) {
+		    M.entregarTxtGimnasio();
+		    txt = M.getTxtGimnasio();
+		}
+
 		BufferedWriter Escritor;
 
 		try {
 
 			Escritor = new BufferedWriter(new FileWriter(archivo, false));
 
-			for (String s : M.getJugador().textoSobreescribir()) {
+			for (String s : txt) {
 
 				Escritor.write(s);
 				Escritor.newLine();
@@ -45,6 +55,15 @@ public class administrador {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	// Método para que cuando se genere una partida nueva, no venga con partidas ya
+	// ganadas
+	public void resetearGimnasios() {
+
+		M.EntregarGimnasios().clear();
+		M.setTxtGimnasioDefault();
 
 	}
 
@@ -193,16 +212,20 @@ public class administrador {
 		return null;
 
 	}
-	
-	//Método para solicitar jugador
+
+	// Método para solicitar jugador
 	public jugador solicitarJugador() {
 		return M.getJugador();
 	}
-	
+
 	// Método generado para solcitar la lista completa de los gimnasios
 	public ArrayList<gimnacios> SolicitarGimnasios() {
 		return M.EntregarGimnasios();
 	}
 
+	// ---------------------para probar los txt--------------------- depue se borra
+	public memoria entregarM() {
+		return M;
+	}
 
 }

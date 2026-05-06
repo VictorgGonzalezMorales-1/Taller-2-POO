@@ -10,6 +10,7 @@ public class gimnacios {
 	// Declarar atributos
 	private String numeroGimnasio, lider, estado;
 	private ArrayList<pokemon> p;
+	private ArrayList<String> texto;
 
 	// Generar Constructor
 	public gimnacios(String numeroGimnasio, String lider, String estado) {
@@ -44,14 +45,29 @@ public class gimnacios {
 	public ArrayList<pokemon> entregarPokemon() {
 		return this.p;
 	}
-	
+
+	public String getEstado() {
+		return estado;
+	}
+
 	public void setEstado(String estado) {
-	    this.estado = estado;
+		this.estado = estado;
 	}
 
 	@Override
 	public String toString() {
 		return this.numeroGimnasio + ") " + this.lider + " - Estado: " + this.estado;
+	}
+
+	// Método para poner los pokemon del gimnasio derrotado con vida 0
+	public void Debilitar() {
+
+		for (pokemon p : p) {
+
+			p.setVida(0);
+
+		}
+
 	}
 
 }

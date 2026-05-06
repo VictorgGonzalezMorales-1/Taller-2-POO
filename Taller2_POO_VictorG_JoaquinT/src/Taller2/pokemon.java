@@ -89,4 +89,5 @@ public class pokemon {
 	public String toString() {
 		return getNombre() + "|" + getTipo() + "|Stats totales: " + StatsTotales();
 	}
+
 }

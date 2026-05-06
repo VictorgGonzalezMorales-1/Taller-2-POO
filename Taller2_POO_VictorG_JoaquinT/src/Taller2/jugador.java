@@ -14,14 +14,14 @@ public class jugador {
 	// Generar Constructor
 	public jugador(String jugador) {
 		this.jugador = jugador;
-		this.derrotados = null;
+		this.derrotados = "";
 		ArrayPokemon = new ArrayList<pokemon>();
 		texto = new ArrayList<String>();
 	}
 
 	// Generar getters y Setters necesarios
-	
-	//Entregar ArrayList del equipo
+
+	// Entregar ArrayList del equipo
 	public ArrayList<pokemon> getListaPokemon() {
 		return ArrayPokemon;
 	}
@@ -30,9 +30,6 @@ public class jugador {
 	public String getJugador() {
 		return jugador;
 	}
-
-	
-	
 
 	// Derrotados
 	public String getDerrotados() {
@@ -43,19 +40,16 @@ public class jugador {
 		this.derrotados = derrotados;
 	}
 
-	// Generar Texto para sobreescribirlo
-	public ArrayList<String> textoSobreescribir() {
-
-		texto.clear();
-
-		texto.add(this.jugador + ";" + this.getDerrotados());
-
-		for (pokemon p : ArrayPokemon) {
-			texto.add(p.toString());
+	// Método para guardar el gimnasio derrotado
+	public void actualizarDerrotados(String nombreLider) {
+		if (nombreLider != null) {
+			derrotados += nombreLider + ",";
 		}
 
-		return texto;
+	}
 
+	public void imprimirJugadorMedallas() {
+		System.out.println(jugador + " - Medallas: " + derrotados);
 	}
 
 }

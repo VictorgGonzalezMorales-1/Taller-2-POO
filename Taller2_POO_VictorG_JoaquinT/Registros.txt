@@ -1,5 +1,6 @@
-yoelchupa;null
-Seismitoad; Vivo
-Meganium; Vivo
-Aerodactyl; Vivo
-Mawile; Vivo
+mish;EmmaLaArdillaRabiosa,
+Magikarp;Debilitado
+Seismitoad;Debilitado
+Slugma;Debilitado
+Heracross;Debilitado
+Seismitoad;Debilitado
