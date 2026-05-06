@@ -272,9 +272,11 @@ public class Main {
 			switch (respuesta) {
 
 			case "1":
+				
+				boolean agregado = A.AlmacenarPokemonCapturado(pokemonGenerado);
 
-				if(A.AlmacenarPokemonCapturado(pokemonGenerado) == true) {
-					P("POkemon capturado con exito\n");
+				if(agregado == true) {
+					P("Pokemon capturado con exito\n");
 				}
 				else {
 					P("Ya tines este pokemon, no puedes capturarlo nuevamente\n");
