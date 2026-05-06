@@ -243,4 +243,21 @@ public class administrador {
 		return M;
 	}
 
+	//Método para crear y guardar los altomando
+	public void crearAltomando(String linea) {
+		
+		String[] partes = linea.split(";");
+		
+		AltosMandos altoMando = new AltosMandos(partes[0], partes[1]);
+		
+		for(int a = 2; a < partes.length; a++) {
+			
+			altoMando.rellenarArray(BuscarPokemon(partes[a]));
+			
+		}
+		
+		M.guardarAltoMando(altoMando);
+		
+	}
+
 }

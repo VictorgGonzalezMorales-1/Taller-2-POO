@@ -19,6 +19,9 @@ public class Main {
 		CargarTxt("Pokedex.txt");
 		CargarTxt("Habitats.txt");
 		CargarTxt("Gimnasios.txt");
+		CargarTxt("Alto Mando.txt");
+		
+		A.entregarM().imprimirAlto();
 
 		menu(scanner);
 
@@ -75,6 +78,10 @@ public class Main {
 
 				if (string.equals("Gimnasios.txt")) {
 					A.CrearGimnasio(linea);
+				}
+				
+				if (string.equals("Alto Mando.txt")) {
+					A.crearAltomando(linea);
 				}
 
 			}
@@ -173,11 +180,13 @@ public class Main {
 				AccesoPc(scanner);
 				break;
 
+			// Completado al 90% (falta prueba de errores)
 			case "4":
 				RetarGimnasio(scanner);
 				break;
 
 			case "5":
+				
 				break;
 
 			// Completado al 90% (falta prueba de errores)
@@ -185,11 +194,12 @@ public class Main {
 				CurarPokemon();
 				break;
 
-			// Método temporal
+			// Completado al 90% (falta prueba de errores)
 			case "7":
 				A.guardar("Registros.txt");
 				break;
 
+			// Completado al 90% (falta prueba de errores)
 			case "8":
 
 				A.guardar("Registros.txt");

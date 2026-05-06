@@ -9,6 +9,7 @@ public class memoria {
 	private ArrayList<pokedex> p = new ArrayList<pokedex>();
 	private ArrayList<Habitat> h = new ArrayList<Habitat>();
 	private ArrayList<gimnacios> g = new ArrayList<gimnacios>();
+	private ArrayList<AltosMandos> a = new ArrayList<AltosMandos>();
 
 	private ArrayList<String> txtJugador = new ArrayList<String>();
 	private ArrayList<String> txtGimnasio = new ArrayList<String>();
@@ -109,6 +110,22 @@ public class memoria {
 		txtGimnasio.add("6;Pruno;Sin derrotar;5;Infernape;Aggron;Tyranitar;Lucario;Aerodactyl");
 		txtGimnasio.add("7;Dani;Sin derrotar;6;Mew;Swanna;Milotic;Dragapult;Lapras;Gigalith");
 		txtGimnasio.add("8;Maxi;Sin derrotar;6;Chandelure;Decidueye;Froslass;Dragapult;Spiritomb;Sableye");
+	}
+	
+	public void imprimirAlto() {
+		
+		String texto = "";
+		
+		for(AltosMandos a: a) {
+			
+			System.out.println(a);
+			
+		}
+		
+	}
+	
+	public void guardarAltoMando(AltosMandos al) {
+		a.add(al);
 	}
 
 }
