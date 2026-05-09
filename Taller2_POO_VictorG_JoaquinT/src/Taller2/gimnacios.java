@@ -58,16 +58,7 @@ public class gimnacios {
 	public String toString() {
 		return this.numeroGimnasio + ") " + this.lider + " - Estado: " + this.estado;
 	}
-
-	// Método para poner los pokemon del gimnasio derrotado con vida 0
-	public void Debilitar() {
-
-		for (pokemon p : p) {
-
-			p.setVida(0);
-
-		}
-
-	}
+	
+	
 
 }

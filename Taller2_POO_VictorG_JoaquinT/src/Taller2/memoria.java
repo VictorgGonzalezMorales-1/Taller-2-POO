@@ -111,21 +111,40 @@ public class memoria {
 		txtGimnasio.add("7;Dani;Sin derrotar;6;Mew;Swanna;Milotic;Dragapult;Lapras;Gigalith");
 		txtGimnasio.add("8;Maxi;Sin derrotar;6;Chandelure;Decidueye;Froslass;Dragapult;Spiritomb;Sableye");
 	}
-	
+
 	public void imprimirAlto() {
-		
+
 		String texto = "";
-		
-		for(AltosMandos a: a) {
-			
+
+		for (AltosMandos a : a) {
+
 			System.out.println(a);
-			
+
 		}
-		
+
 	}
-	
+
 	public void guardarAltoMando(AltosMandos al) {
 		a.add(al);
+	}
+
+	// Método generado para permitir o denegar la lucha con los altos mandos
+	public boolean permitirPeleaAltosMandos() {
+
+		for (gimnacios g : g) {
+
+			if (g.EntregarEstadoGimnasio().equals("Sin derrotar")) {
+				return false;
+			}
+
+		}
+
+		return true;
+
+	}
+	
+	public ArrayList<AltosMandos> entregarAltosMandos(){
+		return a;
 	}
 
 }

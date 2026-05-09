@@ -7,14 +7,18 @@ public class Batalla {
 	// Declarar atributos
 
 	boolean combateFinalizado = false;
+	boolean combateFinalizadoAltoMando = false;
 	boolean jugadorVivo = true;
 	boolean oponeteVivo = true;
+	boolean altoMandoVivo = true;
 
 	private jugador jugador;
 	private gimnacios oponente;
+	private AltosMandos altoMando;
 
 	private pokemon pokemonJugador;
 	private pokemon pokemonOponente;
+	private pokemon pokemonAltoMando;
 
 	// Método para guardar el jugador en el atributo
 	public void otorgarJugador(jugador j) {
@@ -39,10 +43,18 @@ public class Batalla {
 	public void distribucionInicial() {
 
 		// Jugador
-		for (pokemon p : jugador.getListaPokemon()) {
+		ArrayList<pokemon> equipo = jugador.getListaPokemon();
 
-			if (p.estado().equals("Vivo")) {
-				pokemonJugador = p;
+		int largo = 6;
+
+		if (equipo.size() < 6) {
+			largo = equipo.size();
+		}
+
+		for (int a = 0; a < largo; a++) {
+
+			if (equipo.get(a).estado().equals("Vivo")) {
+				pokemonJugador = equipo.get(a);
 				break;
 			}
 
@@ -77,10 +89,18 @@ public class Batalla {
 	// Método para actualizar el pokemon del jugador en caso de que pierda
 	public void actualizarPokemonJugador() {
 
-		for (pokemon p : jugador.getListaPokemon()) {
+		ArrayList<pokemon> equipo = jugador.getListaPokemon();
 
-			if (p.estado().equals("Vivo")) {
-				pokemonJugador = p;
+		int largo = 6;
+
+		if (equipo.size() < 6) {
+			largo = equipo.size();
+		}
+
+		for (int a = 0; a < largo; a++) {
+
+			if (equipo.get(a).estado().equals("Vivo")) {
+				pokemonJugador = equipo.get(a);
 				break;
 			}
 
@@ -112,9 +132,17 @@ public class Batalla {
 		this.oponeteVivo = false;
 
 		// Jugador
-		for (pokemon p : jugador.getListaPokemon()) {
+		ArrayList<pokemon> equipo = jugador.getListaPokemon();
 
-			if (p.estado().equals("Vivo")) {
+		int largo = 6;
+
+		if (equipo.size() < 6) {
+			largo = equipo.size();
+		}
+
+		for (int a = 0; a < largo; a++) {
+
+			if (equipo.get(a).estado().equals("Vivo")) {
 				this.jugadorVivo = true;
 				break;
 			}
@@ -135,6 +163,123 @@ public class Batalla {
 			combateFinalizado = true;
 		}
 
+	}
+
+	// Método generado para permitir o denegar la pelea con los altos mandos
+	public boolean permitirPeleaAltoMando() {
+
+		for (pokemon p : oponente.entregarPokemon()) {
+
+			if (p.estado().equals("")) {
+
+			}
+
+		}
+
+		return true;
+	}
+
+	// ----------------------------------------------------------------------------------
+
+	// Método generado para rellenar los pokemones de los participantes con el
+	// primero vivo
+	public void distribucionInicialAltoMando() {
+
+		// Jugador
+		ArrayList<pokemon> equipo = jugador.getListaPokemon();
+
+		int largo = 6;
+
+		if (equipo.size() < 6) {
+			largo = equipo.size();
+		}
+
+		for (int a = 0; a < largo; a++) {
+
+			if (equipo.get(a).estado().equals("Vivo")) {
+				pokemonJugador = equipo.get(a);
+				break;
+			}
+
+		}
+
+		// Alto mando
+		for (pokemon p : altoMando.getPokemons()) {
+
+			if (p.estado().equals("Vivo")) {
+				pokemonAltoMando = p;
+				break;
+			}
+
+		}
+
+	}
+
+	// Método para guardar al altoMando en el atributo
+	public void otorgarOponente(AltosMandos a) {
+		this.altoMando = a;
+	}
+
+	public pokemon getPokemonAltoMando() {
+		return pokemonAltoMando;
+	}
+
+	// Método para actualizar el pokemon del oponente en caso de que pierda
+	public void actualizarPokemonAltoMando() {
+
+		for (pokemon p : altoMando.getPokemons()) {
+
+			if (p.estado().equals("Vivo")) {
+				pokemonAltoMando = p;
+				break;
+			}
+
+		}
+
+	}
+
+	// Método para ver si el jugador o el alto mando pierden
+	public void revisarVivosAltoMando() {
+
+		this.jugadorVivo = false;
+		this.altoMandoVivo = false;
+
+		// Jugador
+		ArrayList<pokemon> equipo = jugador.getListaPokemon();
+
+		int largo = 6;
+
+		if (equipo.size() < 6) {
+			largo = equipo.size();
+		}
+
+		for (int a = 0; a < largo; a++) {
+
+			if (equipo.get(a).estado().equals("Vivo")) {
+				this.jugadorVivo = true;
+				break;
+			}
+
+		}
+
+		// Oponente
+		for (pokemon p : altoMando.getPokemons()) {
+
+			if (p.estado().equals("Vivo")) {
+				this.altoMandoVivo = true;
+				break;
+			}
+
+		}
+
+		if (this.jugadorVivo == false || this.altoMandoVivo == false) {
+			combateFinalizadoAltoMando = true;
+		}
+
+	}
+
+	public AltosMandos getAltoMando() {
+		return altoMando;
 	}
 
 }

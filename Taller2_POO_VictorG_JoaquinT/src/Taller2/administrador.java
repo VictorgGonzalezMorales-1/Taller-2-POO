@@ -259,5 +259,13 @@ public class administrador {
 		M.guardarAltoMando(altoMando);
 		
 	}
+	
+	public boolean solicitarPermisoAltosMandos() {
+		return M.permitirPeleaAltosMandos();
+	}
+	
+	public ArrayList<AltosMandos> solicitarArrayAltosMandos(){
+		return M.entregarAltosMandos();
+	}
 
 }

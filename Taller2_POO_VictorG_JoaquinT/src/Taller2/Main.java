@@ -21,7 +21,7 @@ public class Main {
 		CargarTxt("Gimnasios.txt");
 		CargarTxt("Alto Mando.txt");
 		
-		A.entregarM().imprimirAlto();
+		A.RellenarHabitat();
 
 		menu(scanner);
 
@@ -79,7 +79,7 @@ public class Main {
 				if (string.equals("Gimnasios.txt")) {
 					A.CrearGimnasio(linea);
 				}
-				
+
 				if (string.equals("Alto Mando.txt")) {
 					A.crearAltomando(linea);
 				}
@@ -119,16 +119,16 @@ public class Main {
 
 			case "2":
 
-			    P("Ingrese su apodo de jugador:");
-			    respuesta = scanner.nextLine();
-			    A.crearJugador(respuesta);
-			    A.resetearGimnasios();
+				P("Ingrese su apodo de jugador:");
+				respuesta = scanner.nextLine();
+				A.crearJugador(respuesta);
+				A.resetearGimnasios();
 
-			    for (String linea : A.entregarM().getTxtGimnasio()) {
-			        A.CrearGimnasio(linea);
-			    }
+				for (String linea : A.entregarM().getTxtGimnasio()) {
+					A.CrearGimnasio(linea);
+				}
 
-			    respuesta = Opciones(scanner);
+				respuesta = Opciones(scanner);
 
 				break;
 
@@ -151,7 +151,6 @@ public class Main {
 		// Llamado al método para rellenar los habitats con sus pokemons
 		// correspondientes
 		// solo una vez en toda la partida
-		A.RellenarHabitat();
 
 		String respuesta = "";
 
@@ -186,7 +185,7 @@ public class Main {
 				break;
 
 			case "5":
-				
+				peleaAltoMando(scanner);
 				break;
 
 			// Completado al 90% (falta prueba de errores)
@@ -282,16 +281,15 @@ public class Main {
 			switch (respuesta) {
 
 			case "1":
-				
+
 				boolean agregado = A.AlmacenarPokemonCapturado(pokemonGenerado);
 
-				if(agregado == true) {
+				if (agregado == true) {
 					P("Pokemon capturado con exito\n");
-				}
-				else {
+				} else {
 					P("Ya tines este pokemon, no puedes capturarlo nuevamente\n");
 				}
-				
+
 				break;
 
 			case "2":
@@ -637,6 +635,201 @@ public class Main {
 	// -----------------------------------------------------------------------------//
 
 	// Método generado para completar la opción 5
+	private static void peleaAltoMando(Scanner scanner) {
+
+		boolean permitirPelea = A.solicitarPermisoAltosMandos();
+
+		if (permitirPelea == true) {
+
+			ArrayList<AltosMandos> altosMandos = A.solicitarArrayAltosMandos();
+
+			for (AltosMandos a : altosMandos) {
+				a.curarPokemons();
+			}
+
+			for (AltosMandos a : altosMandos) {
+
+				B.combateFinalizadoAltoMando = false;
+				AltosMandos altoMando = a;
+				jugador j = A.solicitarJugador();
+
+				ArrayList<pokemon> equipo = A.SolicitarEquipo();
+				boolean hayVivos = false;
+
+				for (pokemon p : equipo) {
+					if (p.estado().equals("Vivo")) {
+						hayVivos = true;
+						break;
+					}
+				}
+
+				if (hayVivos == false) {
+					P("No tienes Pokémon disponibles para combatir\n");
+					return;
+				}
+
+				P("Desafiando a " + altoMando.getNombre() + "!!\n");
+
+				// Guardar los jugadores en batalla
+				B.otorgarJugador(j);
+				B.otorgarOponente(altoMando);
+
+				// Otorgar distribución incicial de pokemon a los participantes de la batalla
+				B.distribucionInicialAltoMando();
+
+				boolean ganar = eleccionesDeBatallaAltoMando(scanner, altoMando, j);
+
+				if (ganar == false) {
+					P("Has sido expulsado del Alto Mando...\n");
+					return;
+				}
+
+			}
+
+			P("FELICIDADES!!!");
+			P("Has derrotado al Alto Mando completo!");
+			P("Ahora eres el nuevo Campeón Pokémon!");
+
+		}
+
+		else {
+
+			P("Para retar a los altos mandos, primero necesita derrotar a todos los gimnasios");
+
+		}
+
+	}
+
+	private static boolean eleccionesDeBatallaAltoMando(Scanner scanner, AltosMandos altoMando, jugador j) {
+
+		String respuesta = "";
+
+		while (B.combateFinalizadoAltoMando == false && !respuesta.equals("3")) {
+
+			P(altoMando.getNombre() + " saca a " + B.getPokemonAltoMando().getNombre());
+			P(j.getJugador() + " saca a " + B.getPokemonJugador().getNombre() + "!\n");
+
+			P("Que deseas hacer?\r\n" + "1) Atacar\r\n" + "2) Cambiar de pokemon\r\n" + "3) Rendirse\r\n"
+					+ "Ingrese Opcion:");
+
+			respuesta = scanner.nextLine();
+
+			switch (respuesta) {
+
+			case "1":
+
+				lucharAltoMando();
+
+				break;
+
+			case "2":
+
+				elegirPokemonParaPelear(scanner);
+
+				break;
+
+			case "3":
+
+				P("Volviendo al menu...\n");
+				return false;
+
+			default:
+				P("Ingrese un valor permitido ..\n");
+
+			}
+
+			B.revisarVivosAltoMando();
+
+		}
+
+		if (B.jugadorVivo == false && B.altoMandoVivo == false) {
+			P("Empate técnico... ambos se han quedado sin Pokémon!\n");
+		}
+
+		else if (B.jugadorVivo == false) {
+			P("Te has quedado sin pokemons en tu equipo!");
+			respuesta = "3";
+			return false;
+		}
+
+		else if (B.altoMandoVivo == false) {
+			P("Felicidades " + B.getJugador().getJugador() + " venciste a " + B.getAltoMando().getNombre() + "\n");
+
+			return true;
+		}
+
+		return false;
+
+	}
+
+	private static void lucharAltoMando() {
+
+		P(B.getPokemonJugador().getNombre() + " -> " + B.getPokemonJugador().StatsTotales() + "puntos");
+		P(B.getPokemonAltoMando().getNombre() + " -> " + B.getPokemonAltoMando().StatsTotales() + "puntos\n");
+
+		// Revisar Efectividad
+
+		int efectividadJugador = t.encontrarIndice(B.getPokemonJugador().getTipo());
+		int efectividadALtoMando = t.encontrarIndice(B.getPokemonAltoMando().getTipo());
+
+		double efectividad = t.entregarEfectividad(efectividadJugador, efectividadALtoMando);
+
+		// Imprimir efectividad pokemon
+
+		double multiplicadorJugador = 1.0;
+
+		if (efectividad == 0.0) {
+			P(B.getPokemonJugador().getNombre() + " no afecta a " + B.getPokemonAltoMando().getNombre() + "!");
+			multiplicadorJugador = 0.0;
+		}
+
+		else if (efectividad == 0.5) {
+			P(B.getPokemonJugador().getNombre() + " es poco eficaz contra " + B.getPokemonAltoMando().getNombre()
+					+ "!");
+			multiplicadorJugador = 0.5;
+
+		} else if (efectividad == 1.0) {
+			P(B.getPokemonJugador().getNombre() + " es un ataque normal contra " + B.getPokemonAltoMando().getNombre()
+					+ "!");
+			multiplicadorJugador = 1.0;
+		}
+
+		else {
+
+			P(B.getPokemonJugador().getNombre() + " es súper eficaz contra " + B.getPokemonAltoMando().getNombre()
+					+ "!");
+			multiplicadorJugador = 2.0;
+		}
+
+		P("Nuevo puntaje:");
+		P(B.getPokemonJugador().getNombre() + " -> " + B.getPokemonJugador().StatsTotales() * multiplicadorJugador
+				+ "puntos");
+		P(B.getPokemonAltoMando().getNombre() + " -> " + B.getPokemonAltoMando().StatsTotales() + "puntos\n");
+
+		if (B.getPokemonJugador().StatsTotales() * multiplicadorJugador > B.getPokemonAltoMando().StatsTotales()) {
+			P("Ha ganado " + B.getPokemonJugador().getNombre() + "! " + B.getPokemonAltoMando().getNombre()
+					+ " ha sido derrotado...\n");
+			B.getPokemonAltoMando().setVida(0);
+			B.actualizarPokemonAltoMando();
+		} else if (B.getPokemonJugador().StatsTotales() * multiplicadorJugador < B.getPokemonAltoMando()
+				.StatsTotales()) {
+			P("Ha ganado " + B.getPokemonAltoMando().getNombre() + "! " + B.getPokemonJugador().getNombre()
+					+ " ha sido derrotado...\n");
+			B.getPokemonJugador().setVida(0);
+			B.actualizarPokemonJugador();
+		}
+
+		else {
+
+			P("Empate\n");
+
+			B.getPokemonAltoMando().setVida(0);
+			B.actualizarPokemonAltoMando();
+			B.getPokemonJugador().setVida(0);
+			B.actualizarPokemonJugador();
+		}
+
+	}
 
 	// -----------------------------------------------------------------------------//
 
@@ -645,15 +838,7 @@ public class Main {
 
 		ArrayList<pokemon> equipo = A.SolicitarEquipo();
 
-		int largo = 0;
-
-		if (equipo.size() >= 6) {
-			largo = 6;
-		} else {
-			largo = equipo.size();
-		}
-
-		for (int a = 0; a < largo; a++) {
+		for (int a = 0; a < equipo.size(); a++) {
 
 			if (equipo.get(a).estado().equals("Debilitado")) {
 				equipo.get(a).curar();
@@ -673,5 +858,8 @@ public class Main {
 	public static void P(String t) {
 		System.out.println(t);
 	}
+	
+	
+	
 
 }

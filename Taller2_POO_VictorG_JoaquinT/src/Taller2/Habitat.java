@@ -24,6 +24,10 @@ public class Habitat {
 	// Metodo para rellenar con pokemons
 	public void RellenarArregloConPokemonNveces(pokemon p, int veces) {
 
+		if (p == null || veces <= 0) {
+		    return;
+		}
+		
 		int contador = 0;
 
 		for (int a = 0; a < pokemones.length; a++) {

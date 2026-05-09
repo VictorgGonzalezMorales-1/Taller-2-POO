@@ -1,8 +1,10 @@
-mish;EmmaLaArdillaRabiosa,
-Magikarp;Debilitado
-Seismitoad;Debilitado
-Slugma;Debilitado
-Heracross;Debilitado
+dsfds;EmmaLaArdillaRabiosa,MartinNegro
+Magcargo;Debilitado
+Gyarados;Debilitado
+Psyduck;Debilitado
+Swanna;Debilitado
+Milotic;Debilitado
+Ekans;Debilitado
+Mamoswine;Vivo
+Scizor;Vivo
 Azumarill;Vivo
-Whiscash;Vivo
-Golduck;Vivo

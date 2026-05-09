@@ -24,4 +24,20 @@ public class AltosMandos {
 		return "AltosMandos [nAltomando=" + nAltomando + ", nombre=" + nombre + ", pokemons=" + pokemons + "]";
 	}
 
+	public ArrayList<pokemon> getPokemons() {
+		return pokemons;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public void curarPokemons() {
+
+		for (pokemon p : pokemons) {
+			p.curar();
+		}
+
+	}
+
 }

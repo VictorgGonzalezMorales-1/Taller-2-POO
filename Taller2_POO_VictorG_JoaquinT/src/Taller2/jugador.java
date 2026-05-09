@@ -14,7 +14,7 @@ public class jugador {
 	// Generar Constructor
 	public jugador(String jugador) {
 		this.jugador = jugador;
-		this.derrotados = "";
+		this.derrotados = "none";
 		ArrayPokemon = new ArrayList<pokemon>();
 		texto = new ArrayList<String>();
 	}
@@ -42,10 +42,13 @@ public class jugador {
 
 	// Método para guardar el gimnasio derrotado
 	public void actualizarDerrotados(String nombreLider) {
-		if (nombreLider != null) {
-			derrotados += nombreLider + ",";
-		}
-
+	    if (nombreLider != null) {
+	        if (derrotados.equals("none") || derrotados.isEmpty()) {
+	            derrotados = nombreLider;
+	        } else {
+	            derrotados += "," + nombreLider;
+	        }
+	    }
 	}
 
 	public void imprimirJugadorMedallas() {
