@@ -1,5 +1,6 @@
-// Victor Manuel Gonzalez Morales - RUT: 22.061.552-9 - Carrera: Ingeniería Civil Industrial
-// Joaquin Esteban Torres Flores - RUT: 21.547.370-8 - Carrera: Ingeniería Civil Industrial
+// Taller 2 - POO - Semestre I - 2026
+// Victor Manuel Gonzalez Morales - RUT: 22.061.552-9 - Carrera: Ingeniería Civil Industrial - GitHub: VictorgGonzalezMorales-1
+// Joaquin Esteban Torres Flores - RUT: 21.547.370-8 - Carrera: Ingeniería Civil Industrial - GitHub: JoaquinTFdev1
 
 package Taller2;
 
