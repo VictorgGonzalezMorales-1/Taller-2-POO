@@ -1,3 +1,6 @@
+// Victor Manuel Gonzalez Morales - RUT: 22.061.552-9 - Carrera: Ingeniería Civil Industrial
+// Joaquin Esteban Torres Flores - RUT: 21.547.370-8 - Carrera: Ingeniería Civil Industrial
+
 package Taller2;
 
 // Importar librerías necesarias para el funcionamiento del Main
